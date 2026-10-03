@@ -1,0 +1,51 @@
+﻿<Window x:Class="ElectronicsStore.LookupForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Справочник"
+        Height="500" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource AppBackground}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="HeaderText" Text="Справочник"
+                   FontSize="18" 
+                   Foreground="{StaticResource AppPrimary}"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <Button Content=" Добавить"
+                    Click="AddItem"
+                    Background="{StaticResource AppPrimary}"
+                    Foreground="White"/>
+            <Button Content=" Изменить"
+                    Click="EditItem"
+                    Background="{StaticResource AppAccent}"
+                    Foreground="White"/>
+            <Button Content="Удалить"
+                    Click="DeleteItem"
+                   Background="{StaticResource AppAccent}"
+                    Foreground="White"/>
+        </StackPanel>
+
+        <ListView x:Name="ItemsList" Grid.Row="2"
+                  DisplayMemberPath="Name"
+                  FontSize="14">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <Button Grid.Row="3" Content="Закрыть"
+                Click="Close_Click"
+                Background="{StaticResource AppAccent}" Foreground="White" HorizontalAlignment="Right"
+               />
+    </Grid>
+</Window>

@@ -1,0 +1,209 @@
+﻿<Window x:Class="ElectronicsStore.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Магазин электроники"
+        Height="720" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="{StaticResource AppBackground}">
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Поиск" FontSize="18"
+                   Foreground="{StaticResource AppPrimary}"/>
+                <TextBox x:Name="SearchBox"
+                 Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                 TextChanged="FilterChanged"
+                 materialDesign:HintAssist.Hint="Введите текст для поиска"
+                 FontSize="18" />
+            </StackPanel>
+
+            <StackPanel x:Name="ManagerButtons"
+                Grid.Column="1"
+                Orientation="Horizontal"
+                VerticalAlignment="Bottom">
+                <Button Content=" Добавить товар"
+                Click="AddProduct"
+                Background="{StaticResource AppPrimary}"
+                Foreground="White" FontSize="18"/>
+                <Button Content=" Изменить"
+                Click="EditProduct"
+                Background="{StaticResource AppAccent}"
+                Foreground="White" FontSize="18"/>
+                <Button Content=" Удалить"
+                Click="DeleteProduct"
+               Background="{StaticResource AppPrimary}"
+                Foreground="White" FontSize="18"/>
+                <Button Content="Категории"
+                Click="OpenCategories"
+                Background="{StaticResource AppPrimary}"
+                Foreground="White"
+                FontSize="18"/>
+                <Button Content="Бренды"
+                Click="OpenBrands"
+                Background="{StaticResource AppPrimary}"
+                Foreground="White" FontSize="18"/>
+                <Button Content="Теги"
+                Click="OpenTags"
+                Background="{StaticResource AppPrimary}"
+                Foreground="White" FontSize="18"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" >
+            <TextBlock Text="Фильтры" FontSize="18" 
+                       Foreground="{StaticResource AppPrimary}" />
+
+            <TextBlock Text="Категория" FontSize="18" />
+            <ComboBox x:Name="CategoryBox"
+                      SelectionChanged="FilterChanged"
+                      FontSize="18"/>
+
+            <TextBlock Text="Бренд" FontSize="18" />
+            <ComboBox x:Name="BrandBox"
+                      SelectionChanged="FilterChanged"
+                      FontSize="18" />
+
+            <TextBlock Text="Цена" FontSize="18" />
+            <TextBlock Text="от" FontSize="18" />
+            <TextBox x:Name="PriceFromBox"
+                     Text="{Binding PriceFrom, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="FilterChanged"
+                     materialDesign:HintAssist.Hint="введите цену"
+                     FontSize="18" />
+            <TextBlock Text="до" FontSize="18" />
+            <TextBox x:Name="PriceToBox"
+                     Text="{Binding PriceTo, UpdateSourceTrigger=PropertyChanged}"
+                     TextChanged="FilterChanged"
+                     materialDesign:HintAssist.Hint="введите цену"
+                     FontSize="18" />
+
+            <Button Content="Сбросить фильтры"
+                    Click="ResetFilters"
+                    Background="{StaticResource AppPrimary}"
+                    Foreground="White"
+                    FontSize="18" />
+
+            <TextBlock Text="Сортировка" FontSize="18" 
+                       Foreground="{StaticResource AppPrimary}" />
+            <ComboBox x:Name="SortBox"
+                      SelectionChanged="SortChanged"
+                      FontSize="18">
+                <ComboBoxItem Content="Наименование" Tag="NameAsc"/>
+                <ComboBoxItem Content="Цена ниже" Tag="PriceAsc"/>
+                <ComboBoxItem Content="Цена выше" Tag="PriceDesc"/>
+                <ComboBoxItem Content="Количество ниже" Tag="StockAsc"/>
+                <ComboBoxItem Content="Количество выше" Tag="StockDesc"/>
+            </ComboBox>
+        </StackPanel>
+
+        <ListView 
+         Margin="5"   x:Name="ProductsList"
+                  Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding ProductsView}"
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="ProductsList_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border x:Name="CardBorder"
+          BorderBrush="{StaticResource AppPrimary}"
+            BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="{Binding Name}"
+                       FontSize="18" 
+                       Foreground="{StaticResource AppPrimary}"
+                       TextWrapping="Wrap"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="1"
+                       HorizontalAlignment="Right"
+                       FontSize="18" >
+                <Run Text="{Binding Price, StringFormat={}{0:F2}}"/>
+                <Run Text=" ₽"/>
+                            </TextBlock>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0"
+                       FontSize="18" Foreground="{StaticResource AppPrimary}">
+                <Run Text="🌟"/>
+                <Run Text="{Binding Rating}"/>
+                            </TextBlock>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0"
+                       FontSize="18" 
+                       Foreground="Black">
+                <Run Text="{Binding Category.Name}"/>
+                            </TextBlock>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="{Binding Description}"
+                       FontSize="18" Foreground="Black"
+                       TextWrapping="Wrap"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="1"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       FontSize="18" >
+                <Run Text="Остаток: "/>
+                <Run Text="{Binding Stock}" />
+                            </TextBlock>
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                     
+                       FontSize="18"
+                       Foreground="{StaticResource AppAccent}">
+             <Run Text="{Binding TagsText, Mode=OneWay}"/>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsLowStock}" Value="True">
+                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#ffd129"/>
+                            <Setter TargetName="CardBorder" Property="BorderThickness" Value="5"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+            Orientation="Horizontal" >
+            <TextBlock FontSize="18">
+        <Run Text="Всего товаров в базе:"/>
+        <Run Text="{Binding TotalCount, Mode=OneWay}" />
+            </TextBlock>
+            <TextBlock FontSize="18" >
+        <Run Text="Показано:"/>
+        <Run Text="{Binding FilteredCount, Mode=OneWay}"/>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

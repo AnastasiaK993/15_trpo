@@ -1,0 +1,37 @@
+﻿<Window x:Class="ElectronicsStore.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Вход в приложение — Магазин электроники"
+        Height="450" Width="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AppBackground}">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="500">
+
+            <TextBlock Text="Магазин электроники"
+                       FontSize="28" 
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource AppPrimary}"/>
+
+            <Button Content="Войти как посетитель"
+                    Click="LoginAsVisitor"
+                    Background="{StaticResource AppAccent}"
+                    Foreground="White"
+                    FontSize="18"/>
+            <TextBlock Text="Пароль для входа как менеджер"
+                       FontSize="28" />
+            <PasswordBox x:Name="PinBox"
+                         materialDesign:HintAssist.Hint="Пароль"
+                         FontSize="18"/>
+
+            <Button Content="Войти как менеджер"
+                    Click="LoginAsManager"
+                    Background="{StaticResource AppPrimary}"
+                    Foreground="White"
+                    FontSize="18"/>
+
+
+        </StackPanel>
+    </Grid>
+</Window>

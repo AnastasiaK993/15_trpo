@@ -1,0 +1,79 @@
+﻿<Window x:Class="ElectronicsStore.ProductForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Товар"
+        Height="700" Width="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AppBackground}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel >
+
+            <TextBlock x:Name="HeaderText" Text="Добавление товара"
+                       FontSize="18"
+                       Foreground="{StaticResource AppPrimary}"       />
+
+            <TextBlock Text="Название " FontSize="18" />
+            <TextBox x:Name="NameBox" FontSize="18"
+                     materialDesign:HintAssist.Hint="Введите название"/>
+
+            <TextBlock Text="Описание" FontSize="18" />
+            <TextBox x:Name="DescriptionBox" FontSize="18" 
+                     Height="70" TextWrapping="Wrap" AcceptsReturn="True"
+                     materialDesign:HintAssist.Hint="Введите описание"/>
+
+            <TextBlock Text="Цена " FontSize="18" />
+            <TextBox x:Name="PriceBox" FontSize="18"
+                     materialDesign:HintAssist.Hint="от 1"/>
+
+            <TextBlock Text="Остаток " FontSize="18" />
+            <TextBox x:Name="StockBox" FontSize="18" 
+                     materialDesign:HintAssist.Hint="0"/>
+
+            <TextBlock Text="Рейтинг " FontSize="18" />
+            <TextBox x:Name="RatingBox" FontSize="18" 
+                     materialDesign:HintAssist.Hint="от 0 до 5"/>
+
+            <TextBlock Text="Дата создания " FontSize="18"/>
+            <DatePicker x:Name="CreatedAtPicker" FontSize="18"/>
+
+            <TextBlock Text="Категория " FontSize="18" />
+            <ComboBox x:Name="CategoryBox" FontSize="18" 
+                      DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Бренд " FontSize="18" />
+            <ComboBox x:Name="BrandBox" FontSize="18" 
+                      DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Теги" FontSize="18" />
+            <ItemsControl x:Name="TagsList" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}"
+                                  Tag="{Binding Id}"
+                                  Checked="TagChecked"
+                                  Unchecked="TagChecked"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Сохранить"
+                        Click="Save"
+                        Background="{StaticResource AppPrimary}"
+                        Foreground="White" FontSize="18"/>
+                <Button Content="Отмена"
+                        Click="Cancel"
+                       Background="{StaticResource AppAccent}"
+                        Foreground="White"
+                       FontSize="14"/>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>
